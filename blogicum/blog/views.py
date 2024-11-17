@@ -46,7 +46,6 @@ def post_detail(request, pk):
             return redirect('blog:post_detail', pk=post.pk)
     else:
         form = CommentForm()
-    
     comments = Comment.objects.filter(post=post).order_by('created_at')
     template = 'blog/detail.html'
     context = {
@@ -90,13 +89,11 @@ def profile(request, username):
     if request.user.is_authenticated and request.user == user:
         user_posts = Post.objects.filter(
             author=user
-        ).annotate(comment_count=Count('comments')
-        ).order_by('-pub_date')
+        ).annotate(comment_count=Count('comments')).order_by('-pub_date')
     else:
         user_posts = Post.objects.filter(
             author=user, is_published=True, pub_date__lte=timezone.now()
-        ).annotate(comment_count=Count('comments')
-        ).order_by('-pub_date')
+        ).annotate(comment_count=Count('comments')).order_by('-pub_date')
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -105,6 +102,7 @@ def profile(request, username):
         'page_obj': page_obj,
         'is_staff': request.user.is_authenticated and request.user == user,
     }
+
     return render(request, 'blog/profile.html', context)
 
 
@@ -184,12 +182,14 @@ def edit_comment(request, post_id, comment_id):
             return redirect('blog:post_detail', pk=post_id)
     else:
         form = CommentForm(instance=comment)
-    return render(request, 'blog/comment.html',
-    {
-        'form': form,
-        'post_id': post_id,
-        'comment': comment
-    })
+    return render(
+        request,
+        'blog/comment.html',
+        {
+            'form': form,
+            'post_id': post_id,
+            'comment': comment
+        })
 
 
 @login_required

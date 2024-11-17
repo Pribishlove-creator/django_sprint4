@@ -95,7 +95,12 @@ class Comment(models.Model):
         verbose_name="Дата создания"
     )
 
-    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments', verbose_name="Пост")
+    post = models.ForeignKey(
+        'blog.Post',
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name="Пост"
+    )
 
     class Meta:
         verbose_name = "Комментарий"
