@@ -98,7 +98,7 @@ def profile(request, username):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     context = {
-        'profile': user, 
+        'profile': user,
         'page_obj': page_obj,
         'is_staff': request.user.is_authenticated and request.user == user,
     }
