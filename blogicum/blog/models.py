@@ -84,9 +84,16 @@ class Location(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор комментария")
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        verbose_name="Автор комментария"
+    )
     text = models.TextField("Текст комментария")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        verbose_name="Дата создания"
+    )
 
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='comments', verbose_name="Пост")
 
